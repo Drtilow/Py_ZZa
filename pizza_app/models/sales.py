@@ -3,7 +3,7 @@ class Sales:
 
     def __init__(self):
         if Sales.__instance is not None:
-            raise Exception("Singleton class already exists!")
+            raise Exception("Singleton již existuje!")
         self.orders = []
         Sales.__instance = self
 

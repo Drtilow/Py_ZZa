@@ -4,6 +4,7 @@ from models.order import Order
 from models.sales import Sales
 from models.payment import CardPayment, CashPayment
 
+
 def main():
     sales = Sales.get_instance()
     order = Order()
@@ -21,20 +22,36 @@ def main():
             else:
                 print("Neplatná volba pizzy!")
 
-
         elif choice == '2':
             if order.total_price > 0:
-                payment_method = CardPayment()
+                print("\nVyber způsob platby:")
+                print("1. Kartou")
+                print("2. Hotově")
+                payment_choice = input("Zadej volbu platby: ")
+
+                if payment_choice == '1':
+                    payment_method = CardPayment()
+                elif payment_choice == '2':
+                    payment_method = CashPayment()
+                else:
+                    print("Neplatná volba platby!")
+                    continue
+
                 print(payment_method.pay(order.total_price))
                 sales.add_order(order)
-                order = Order()
+                order = Order()  # vytvoříme novou prázdnou objednávku
+
             else:
                 print("Objednávka je prázdná!")
 
         elif choice == '3':
-            print("\n--- Všechny objednávky ---")
-            for ord in sales.orders:
-                print(ord)
+            print("\n--- Admin menu: Přehled všech objednávek ---")
+            all_sales = sales.show_sales()
+            if all_sales:
+                for order_info in all_sales:
+                    print(order_info)
+            else:
+                print("Žádné objednávky k zobrazení.")
 
         elif choice == '4':
             print("Aplikace byla ukončena.")
@@ -42,3 +59,7 @@ def main():
 
         else:
             print("Neplatná volba, zkus to znovu.")
+
+
+if __name__ == "__main__":
+    main()

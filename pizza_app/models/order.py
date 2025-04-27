@@ -8,4 +8,5 @@ class Order:
         self.total_price += pizza.price
 
     def __str__(self):
-        return f"Objednávka obsahuje {len(self.pizzas)} pizze. Celková cena: {self.total_price}€"
+        pizza_list = ', '.join([pizza.name for pizza in self.pizzas])
+        return f"Objednávka: {len(self.pizzas)} pizza/y ({pizza_list}) | Celkem: {self.total_price} Kč"
